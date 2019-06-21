@@ -6,6 +6,7 @@ say q:to/END/;
     Press Space bar to toggle animation / reset to minimum speed.
     Left Control key to toggle stationary / rotating center.
     Use + / - keys to add remove line segments.
+    Pres Q to quit.
     END
 
 use SDL2::Raw;
