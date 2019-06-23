@@ -10,7 +10,7 @@ unit sub MAIN (
 say q:to/END/;
 
     Use Up / Down arrows to change the scroll speed.
-    Use Left / Right arroes to adjust the gap between the raster bars.
+    Use Left / Right arrows to adjust the gap between the raster bars.
     Use Pg Up / Pg Dn to adjust raster bar height.
     Use Z / X to change the angle of the raster bars.
     Use Space bar to pause / resume scrolling.
