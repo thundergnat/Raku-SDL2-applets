@@ -1,10 +1,10 @@
 unit sub MAIN (
     Int :b(:$bar-height) is copy = 60; #= Height of the individual "Raster bars", minimum 32 (pixels)
-    Int :d(:$dir) is copy   = -1; #= Scroll direction: -1 is "up" 1 is "down"
-    Int :s(:$step) is copy  = 4;  #= Scroll speed (pixels per step
-    Int :g(:$gap) is copy   = $bar-height + 50; #= Gap between bars (pixels)
-    Int :a(:$angle) is copy = 0; #= Angle to orient bars off horizontal (-60 to 60 degrees)
-    Real :r(:$rnd) is copy   = 0; #= Delay between randomize events
+    Int :d(:$dir) is copy        = -1; #= Scroll direction: -1 is "up" 1 is "down"
+    Int :s(:$step) is copy       = 4;  #= Scroll speed (pixels per step
+    Int :g(:$gap) is copy        = $bar-height + 50; #= Gap between bars (pixels)
+    Int :a(:$angle) is copy      = 0; #= Angle to orient bars off horizontal (-60 to 60 degrees)
+    Real :r(:$rnd) is copy       = 0; #= Delay between randomize events
 );
 
 say q:to/END/;
