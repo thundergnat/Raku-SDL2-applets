@@ -67,9 +67,13 @@ main: loop {
     SDL_RenderPresent($render);
     SDL_SetRenderDrawColor($render, 0, 0, 0, 0);
     SDL_RenderClear($render);
+
+    print fps;
 }
 
 SDL_Quit();
+
+put '';
 
 sub palette ($l) { (^$l).map: { hsv2rgb(($_ * 360/$l % 360)/360, 1, 1).list } };
 
@@ -86,4 +90,18 @@ sub hsv2rgb ( $h, $s, $v ){ # inputs normalized 0-1
         when 5/6..1      { $c, 0, $x }
     }
     ( $r, $g, $b ).map: ((*+$m) * 255).Int
+}
+
+sub fps {
+    state $fps-frames = 0;
+    state $fps-now    = now;
+    state $fps        = '';
+    $fps-frames++;
+    if now - $fps-now >= 1 {
+        $fps = [~] "\b" x 40, ' ' x 20, "\b" x 20 ,
+            sprintf "FPS: %5.1f  ", ($fps-frames / (now - $fps-now)).round(.1);
+        $fps-frames = 0;
+        $fps-now = now;
+    }
+    $fps
 }

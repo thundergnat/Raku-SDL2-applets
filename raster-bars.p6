@@ -61,7 +61,6 @@ enum KEY_CODES (
 my $port  = +@bars * $gap;
 my $y     = $dir > 0 ?? $height - $port !! 0;
 my $now   = now;
-my $frame = 0;
 
 main: loop {
     handle-event($event) while SDL_PollEvent($event);
@@ -89,7 +88,7 @@ main: loop {
 
     SDL_RenderClear($render);
 
-    $frame++;
+    print fps;
 }
 
 put '';
@@ -171,8 +170,19 @@ sub randomize {
     } else {
         $y = 0 - ceiling ($height max $width) / cos(π * $angle / 180).abs;
     }
-
-    print "\r{($frame / (now - $now)).round(.1)} FPS", ' ' x 3, "\b" x 2;
     $now = now;
-    $frame = 0;
+}
+
+sub fps {
+    state $fps-frames = 0;
+    state $fps-now    = now;
+    state $fps        = '';
+    $fps-frames++;
+    if now - $fps-now >= 1 {
+        $fps = [~] "\b" x 40, ' ' x 20, "\b" x 20 ,
+            sprintf "FPS: %5.1f  ", ($fps-frames / (now - $fps-now)).round(.1);
+        $fps-frames = 0;
+        $fps-now = now;
+    }
+    $fps
 }

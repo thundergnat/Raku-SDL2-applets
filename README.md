@@ -9,6 +9,8 @@ Simple animation with a series of concentric rectangles that change color with a
 
 Will adjust size to fill / fit window size.
 
+Displays a simple frames-per-second calculation, updated every second.
+
 - Press space bar to reverse the palette rotation direction.
 - Press Q to quit.
 
@@ -19,6 +21,8 @@ Written for Rosettacode http://rosettacode.org/wiki/Raster_bars#Perl_6
 Displays a series of randomly colored bars and scrolls them with an array of options.
 
 Will adjust size to fill / fit window size.
+
+Displays a simple frames-per-second calculation, updated every second.
 
 - Use Up / Down arrows to change the scroll speed.
 - Use Left / Right arroes to adjust the gap between the raster bars.
@@ -51,6 +55,7 @@ Written for Rosettacode http://rosettacode.org/wiki/Polyspiral#SDL_full_animatio
 Generates a fully animated polyspiral. Slightly hard to explain what a polyspiral is, easier to run it and see.
 
 Will adjust size to fill / fit window size. Rotates the palette as it updates.
+Displays a simple frames-per-second calculation, updated every second.
 
 - Use the Up / Down arrow keys to speed up / slow down the update speed.
 - Use PgUp / PgDn keys to increment / decrement animation speed by large amounts.
