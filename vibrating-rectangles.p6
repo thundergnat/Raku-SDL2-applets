@@ -12,7 +12,7 @@ my $height = 800;
 SDL_Init(VIDEO);
 
 my $window = SDL_CreateWindow(
-    'Vibrating rectangles',
+    'Vibrating rectangles - Perl 6',
     SDL_WINDOWPOS_CENTERED_MASK,
     SDL_WINDOWPOS_CENTERED_MASK,
     $width, $height,

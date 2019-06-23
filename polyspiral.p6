@@ -18,7 +18,7 @@ my $height = 900;
 SDL_Init(VIDEO);
 
 my $window = SDL_CreateWindow(
-    'Polyspiral',
+    'Polyspiral - Perl 6',
     SDL_WINDOWPOS_CENTERED_MASK,
     SDL_WINDOWPOS_CENTERED_MASK,
     $width, $height,
