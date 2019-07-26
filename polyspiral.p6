@@ -80,7 +80,7 @@ main: loop {
                 #say .scancode; # unknown key pressed
             }
             when *.type == WINDOWEVENT {
-                if .event == 5 {
+                if .event == RESIZED {
                     $width  = .data1;
                     $height = .data2;
                 }
