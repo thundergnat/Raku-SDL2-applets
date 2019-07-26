@@ -148,7 +148,7 @@ sub handle-event ($event) {
             } #else { say .scancode }
         }
         when *.type == WINDOWEVENT {
-            if .event == 5 {
+            if .event == RESIZED {
                 $width  = .data1;
                 $height = .data2 + $bar-height;
             }
@@ -180,7 +180,7 @@ sub fps {
     $fps-frames++;
     if now - $fps-now >= 1 {
         $fps = [~] "\b" x 40, ' ' x 20, "\b" x 20 ,
-            sprintf "FPS: %5.1f  ", ($fps-frames / (now - $fps-now)).round(.1);
+            sprintf "FPS: %5.2f  ", ($fps-frames / (now - $fps-now)).round(.01);
         $fps-frames = 0;
         $fps-now = now;
     }

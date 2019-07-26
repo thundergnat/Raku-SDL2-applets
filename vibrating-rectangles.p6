@@ -39,7 +39,7 @@ main: loop {
         given $casted_event {
             when *.type == QUIT { last main }
             when *.type == WINDOWEVENT {
-                if .event == 5 {
+                if .event == RESIZED {
                     $width  = .data1;
                     $height = .data2;
                 }
