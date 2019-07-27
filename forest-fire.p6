@@ -47,7 +47,7 @@ sub render {
             next if $pixdata[$idx] == $tree;
             if $pixdata[$idx] == $bare {
                 # Maybe spawn a tree on bare ground
-                $$work-buffer[$idx] = rand < $tree-spawn ?? $tree !! $bare;
+                $work-buffer[$idx] = rand < $tree-spawn ?? $tree !! $bare;
             } elsif $pixdata[$idx] == $heating {
                 # Check if there are trees around a hot spot and light them if humidity is low enough
                 $work-buffer[$idx - $w - 1] = $heating if rand > $humidity && $pixdata[$idx - $w - 1] && $row > 0;
