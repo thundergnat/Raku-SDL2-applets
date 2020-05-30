@@ -7,6 +7,7 @@ Various little Perl 6 SDL2 applets, mostly for Rosettacode entries.
 * [polyspiral](#polyspiral)
 * [whitenoise](#whitenoise)
 * [vibrating-rectangles](#vibrating-rectangles)
+* [sdl2ttf](#sdl2ttf)
 
 
 ---
@@ -136,6 +137,20 @@ Will adjust size to fill / fit window size.
 Displays a simple frames-per-second calculation, updated every second.
 
 - Press space bar to reverse the palette rotation direction.
+- Press Q to quit.
+
+---
+## <a name="sdl2ttf"></a>sdl2ttf.p6
+
+Example script for SDL2-ttf module https://github.com/thundergnat/SDL2-ttf
+
+Render a bunch of text textures and animate them.
+
+Will adjust size to fill / fit window size.
+
+Displays a simple frames-per-second calculation, updated every second.
+
+- Press space bar change animation.
 - Press Q to quit.
 
 ---

@@ -18,8 +18,8 @@ my int ($w, $h) = 200, 200;
 
 my $forest_texture = SDL_CreateTexture($renderer, %PIXELFORMAT<RGB332>, STREAMING, $w, $h);
 
-my $pixdatabuf  = CArray[int64].new(0, $w, $h, $w);
-my $work-buffer = CArray[int64].new(0, $w, $h, $w);
+my $pixdatabuf  = CArray[int64].new(0, 600, 600, 600);
+my $work-buffer = CArray[int64].new;
 
 my int $bare    = 0;    # Black
 my int $tree    = 8;    # Green
@@ -85,7 +85,7 @@ my $event = SDL_Event.new;
 enum KEY_CODES ( K_Q => 20 );
 
 main: loop {
-
+    start print fps;
     while SDL_PollEvent($event) {
         my $casted_event = SDL_CastEvent($event);
 
@@ -109,7 +109,7 @@ main: loop {
         }
     }
     render();
-    print fps;
+
 }
 say '';
 
