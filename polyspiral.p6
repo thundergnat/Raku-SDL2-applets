@@ -18,7 +18,7 @@ my $height = 900;
 SDL_Init(VIDEO);
 
 my $window = SDL_CreateWindow(
-    'Polyspiral - Perl 6',
+    'Polyspiral - Raku',
     SDL_WINDOWPOS_CENTERED_MASK,
     SDL_WINDOWPOS_CENTERED_MASK,
     $width, $height,
@@ -98,7 +98,7 @@ main: loop {
         my $length = $scale + $scale * $_;
         my ($x2, $y2) = ($x1, $y1) «+« cis(($angle * $rot * $lines) + $angle * $_).reals »*» $length;
         SDL_SetRenderDrawColor($render, |@rgb[$_], 255);
-        SDL_RenderDrawLine($render, |($x1, $y1, $x2, $y2)».round(1));
+        SDL_RenderDrawLine($render, |($x1, $y1, $x2, $y2)».round);
         ($x1, $y1) = $x2, $y2;
     }
     @rgb.=rotate($lines/60);
@@ -114,19 +114,21 @@ say '';
 
 sub palette ($l) { (^$l).map: { hsv2rgb(($_ * 360/$l % 360)/360, 1, 1).list } };
 
-sub hsv2rgb ( $h, $s, $v ){ # inputs normalized 0-1
-    my $c = $v * $s;
-    my $x = $c * (1 - abs( (($h*6) % 2) - 1 ) );
-    my $m = $v - $c;
-    my ($r, $g, $b) = do given $h {
-        when   0..^(1/6) { $c, $x, 0 }
-        when 1/6..^(1/3) { $x, $c, 0 }
-        when 1/3..^(1/2) { 0, $c, $x }
-        when 1/2..^(2/3) { 0, $x, $c }
-        when 2/3..^(5/6) { $x, 0, $c }
-        when 5/6..1      { $c, 0, $x }
+sub hsv2rgb ( $h, $s, $v ){
+    state %cache;
+    %cache{"$h|$s|$v"} //= do {
+        my $c = $v * $s;
+        my $x = $c * (1 - abs( (($h*6) % 2) - 1 ) );
+        my $m = $v - $c;
+        [(do given $h {
+            when   0..^1/6 { $c, $x, 0 }
+            when 1/6..^1/3 { $x, $c, 0 }
+            when 1/3..^1/2 { 0, $c, $x }
+            when 1/2..^2/3 { 0, $x, $c }
+            when 2/3..^5/6 { $x, 0, $c }
+            when 5/6..1    { $c, 0, $x }
+        } ).map: ((*+$m) * 255).Int]
     }
-    ( $r, $g, $b ).map: ((*+$m) * 255).Int
 }
 
 sub fps {

@@ -4,6 +4,7 @@ unit sub MAIN (
     Int :s(:$step) is copy       = 4;  #= Scroll speed (pixels per step
     Int :g(:$gap) is copy        = $bar-height + 50; #= Gap between bars (pixels)
     Int :a(:$angle) is copy      = 0; #= Angle to orient bars off horizontal (-60 to 60 degrees)
+    Int :sw(:$sway) is copy      = 0; #= Swaying on / off
     Real :r(:$rnd) is copy       = 0; #= Delay between randomize events
 );
 
@@ -17,6 +18,8 @@ say q:to/END/;
     Use Left Ctrl to toggle the scroll direction.
     Press R to toggle Randomize on / off.
     If Randomize is active, adjust the randomize delay with < / >
+    Press S to toggle Swaying on / off.
+    If Swaying is active, adjust the period with D / F
     Press Q to exit.
     END
 
@@ -29,7 +32,7 @@ my $height = 800;
 SDL_Init(VIDEO);
 
 my $window = SDL_CreateWindow(
-    'Raster Bars - Perl 6',
+    'Raster Bars - Raku',
     SDL_WINDOWPOS_CENTERED_MASK,
     SDL_WINDOWPOS_CENTERED_MASK,
     $width, $height, RESIZABLE
@@ -54,13 +57,17 @@ enum KEY_CODES (
     K_X      => 27,
     K_Q      => 20,
     K_R      => 21,
+    K_S      => 22,
+    K_D      => 7,
+    K_F      => 9,
     K_LT     => 54,
     K_GT     => 55,
 );
 
 my $port  = +@bars * $gap;
-my $y     = $dir > 0 ?? $height - $port !! 0;
+my $y     = $dir > 0 ?? $height - $port !! $height ;
 my $now   = now;
+my $period = 1;
 
 main: loop {
     handle-event($event) while SDL_PollEvent($event);
@@ -75,11 +82,13 @@ main: loop {
 
     $y = $step * $dir + $y;
 
+    $angle = (((now * $period) % τ).sin * 35).Int if $sway;
+
     for ^@bars {
-        my $offset = ceiling $gap / cos(π * $angle / 180).abs;
+        my $offset = $sway ?? $gap !! ceiling $gap / cos(π * $angle / 180).abs;
         SDL_RenderCopyEx( $render, @bars[$_], Nil,
-          SDL_Rect.new( -$gap, $y + $offset * $_, $width * 4, $bar-height),
-          $angle.Num, SDL_Point.new(:x(0),:y(0)), 0
+          SDL_Rect.new( -($width*4), $y + $offset * $_, $width * 10, $bar-height),
+          $angle.Num, SDL_Point.new(:x((4.5*$width).Int),:y($y + $offset * $_)), 0
 
         )
     }
@@ -138,14 +147,17 @@ sub handle-event ($event) {
                     when 'K_PGDN'   { $bar-height = $bar-height >= 34 ?? $bar-height - 2 !! $bar-height }
                     when 'K_SPACE'  { $step = $step ?? 0 !! 1 }
                     when 'K_LCTRL'  { $dir  *= -1 }
-                    when 'K_Z'      { $angle = $angle > -60 ?? $angle - 5 !! $angle }
-                    when 'K_X'      { $angle = $angle <  60 ?? $angle + 5 !! $angle }
+                    when 'K_Z'      { $angle = $angle > -45 ?? $angle - 5 !! $angle }
+                    when 'K_X'      { $angle = $angle <  45 ?? $angle + 5 !! $angle }
                     when 'K_R'      { $rnd = $rnd ?? 0 !! 1 }
+                    when 'K_S'      { $sway xor= 1 }
+                    when 'K_F'      { $period += .1 }
+                    when 'K_D'      { $period = $period - .1 max .1;  }
                     when 'K_GT'     { $rnd += .2 }
                     when 'K_LT'     { $rnd = $rnd > .2 ?? $rnd -.2 !! .2 }
                     when 'K_Q'      { last main }
                 }
-            } #else { say .scancode }
+            } #else { say .scancode, "\n" }
         }
         when *.type == WINDOWEVENT {
             if .event == RESIZED {
@@ -161,7 +173,7 @@ sub randomize {
     $step  = (4..8).pick;
     $bar-height   = (32..200).pick;
     $gap   = $bar-height + (1..100).pick;
-    $angle = (-60, *+5 ... 60).pick;
+    $angle = (-45, *+5 ... 45).pick;
 
     $port = +@bars * $gap;
 

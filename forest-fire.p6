@@ -5,7 +5,7 @@ my ($width, $height) = 900, 900;
 
 SDL_Init(VIDEO);
 my SDL_Window $window = SDL_CreateWindow(
-    "Forest Fire - Perl 6",
+    "Forest Fire - Raku",
     SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK,
     $width, $height,
     RESIZABLE
@@ -18,7 +18,7 @@ my int ($w, $h) = 200, 200;
 
 my $forest_texture = SDL_CreateTexture($renderer, %PIXELFORMAT<RGB332>, STREAMING, $w, $h);
 
-my $pixdatabuf  = CArray[int64].new(0, 600, 600, 600);
+my $pixdatabuf  = CArray[int64].new(0, 200, 200, 200);
 my $work-buffer = CArray[int64].new;
 
 my int $bare    = 0;    # Black

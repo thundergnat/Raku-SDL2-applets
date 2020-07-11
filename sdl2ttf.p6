@@ -9,7 +9,7 @@ my $height = 800;
 SDL_Init(VIDEO);
 
 my $window = SDL_CreateWindow(
-    'SDL_ttf Test',
+    'SDL2-ttf',
     SDL_WINDOWPOS_CENTERED_MASK,
     SDL_WINDOWPOS_CENTERED_MASK,
     $width, $height, RESIZABLE
@@ -53,16 +53,8 @@ my $raku = SDL_CreateTextureFromSurface(
     $render, TTF_Render_Blended($font, ' Raku ', $pink)
 );
 
-my $c1 = SDL_CreateTextureFromSurface(
-    $render, TTF_Render_Blended( $font, '»ö«', $green )
-);
-
-my $c2 = SDL_CreateTextureFromSurface(
-    $render, TTF_Render_Blended( $font, '»ö«', $blue )
-);
-
-my $c3 = SDL_CreateTextureFromSurface(
-    $render, TTF_Render_Blended( $font, '»ö«', $yellow )
+my @butterflies = ( SDL_CreateTextureFromSurface(
+    $render, TTF_Render_Blended( $font, '»ö«', TTF_Color((64..255).roll,(64..255).roll,(64..255).roll) ) ) xx 60;
 );
 
 my $space = SDL_CreateTextureFromSurface(
@@ -86,7 +78,7 @@ my $step  = 1;
 my $dir   = 0;
 
 my @swarm = [(^$width).roll, (^$height).roll, (-2..2).roll, (-2..2).roll,
-             ($c1, $c2, $c3).roll] xx 30;
+             @butterflies.pick] xx +@butterflies;
 
 my $ch; # Camelia height
 
@@ -101,16 +93,16 @@ main: loop {
 
     SDL_RenderCopy( $render, $space, Nil, SDL_Rect.new( ($width / 3).Int, 750, ($width / 3).Int, 50) );
 
-    # In front of Raku
-    SDL_RenderCopy( $render, $_[4], Nil, SDL_Rect.new( $_[0].Int, $_[1].Int, 50, 40) ) for @swarm[^15];
+    # Behind Raku
+    SDL_RenderCopy( $render, $_[4], Nil, SDL_Rect.new( $_[0].Int, $_[1].Int, 50, 40) ) for @swarm[^(@swarm/2)];
 
     # Raku
     SDL_RenderCopyEx( $render, $raku, Nil, Nil, $angle.Num,
         SDL_Point.new( :x($width div 2), :y($height div 2) ), 0
     );
 
-    # behind Raku
-    SDL_RenderCopy( $render, $_[4], Nil, SDL_Rect.new( $_[0].Int, $_[1].Int, 50, 40) ) for @swarm[15..*];
+    # In front of Raku
+    SDL_RenderCopy( $render, $_[4], Nil, SDL_Rect.new( $_[0].Int, $_[1].Int, 50, 40) ) for @swarm[(@swarm/2)..*];
 
     for ^@swarm {
         (@swarm[$_][0] += @swarm[$_][2]) %= $width;
@@ -126,10 +118,10 @@ main: loop {
     $ch = ($height / 3).round;
 
     # Camelia
-    SDL_RenderCopy( $render, $c1, Nil, SDL_Rect.new( 0, 0, $ch, $ch) );
-    SDL_RenderCopy( $render, $c2, Nil, SDL_Rect.new( $width - $ch, 0, $ch, $ch) );
-    SDL_RenderCopy( $render, $c2, Nil, SDL_Rect.new( 0, $height - $ch, $ch, $ch) );
-    SDL_RenderCopy( $render, $c1, Nil, SDL_Rect.new( $width - $ch, $height - $ch, $ch, $ch) );
+    SDL_RenderCopy( $render, @butterflies[0], Nil, SDL_Rect.new( 0, 0, $ch, $ch) );
+    SDL_RenderCopy( $render, @butterflies[1], Nil, SDL_Rect.new( $width - $ch, 0, $ch, $ch) );
+    SDL_RenderCopy( $render, @butterflies[2], Nil, SDL_Rect.new( 0, $height - $ch, $ch, $ch) );
+    SDL_RenderCopy( $render, @butterflies[3], Nil, SDL_Rect.new( $width - $ch, $height - $ch, $ch, $ch) );
 
     SDL_RenderPresent($render);
 
