@@ -3,7 +3,7 @@ unit sub MAIN (
     Int :d(:$dir) is copy        = -1; #= Scroll direction: -1 is "up" 1 is "down"
     Int :s(:$step) is copy       = 4;  #= Scroll speed (pixels per step
     Int :g(:$gap) is copy        = $bar-height + 50; #= Gap between bars (pixels)
-    Int :a(:$angle) is copy      = 0; #= Angle to orient bars off horizontal (-60 to 60 degrees)
+    Real :a(:$angle) is copy     = 0; #= Angle to orient bars off horizontal (-45 to 45 degrees)
     Int :sw(:$sway) is copy      = 0; #= Swaying on / off
     Real :r(:$rnd) is copy       = 0; #= Delay between randomize events
 );
@@ -75,14 +75,14 @@ main: loop {
     randomize if $rnd and now - $now > $rnd;
 
     if $dir > 0 {
-        $y = $height - $port if $y > 0 - ceiling $height / cos(π * $angle / 180).abs
+        $y = 1.5 * $height - $port if $y > 0 - ceiling $height / cos(π * $angle / 180).abs
     } else {
-        $y = 0 - ceiling $height / cos(π * $angle / 180).abs if $y < $height - $port
+        $y = 0 - ceiling  $height / cos(π * $angle / 180).abs if $y < 1.5 * $height - $port
     }
 
     $y = $step * $dir + $y;
 
-    $angle = (((now * $period) % τ).sin * 35).Int if $sway;
+    $angle = (((now * $period) % τ).sin * 35).Num if $sway;
 
     for ^@bars {
         my $offset = $sway ?? $gap !! ceiling $gap / cos(π * $angle / 180).abs;
