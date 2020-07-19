@@ -44,8 +44,7 @@ sub render {
         my int $rs = $row * $w; # row start
         my int $re = $rs  + $w; # row end
         loop (my int $idx = $rs; $idx < $re; $idx = $idx + 1) {
-            next unless @buffer[ $idx ];
-            $pixdata[$idx] =  @buffer[ $idx ] < 5 ?? @color[@buffer[ $idx ]] !! @color[4];
+            $pixdata[$idx] =  @buffer[$idx] < 4 ?? @color[@buffer[$idx]] !! @color[4];
             if @buffer[$idx] >= 4 {
                 my $grains = floor @buffer[$idx] / 4;
                 @buffer[ $idx - $w ] += $grains if $row > 0;
