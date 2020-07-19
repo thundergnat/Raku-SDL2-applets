@@ -1,5 +1,5 @@
 # p6-SDL2-applets
-Various little Perl 6 SDL2 applets, mostly for Rosettacode entries.
+Various little Raku SDL2 applets, mostly for Rosettacode entries.
 
 * [forest-fire](#forest-fire)
 * [raster-bars](#raster-bars)
@@ -8,6 +8,7 @@ Various little Perl 6 SDL2 applets, mostly for Rosettacode entries.
 * [whitenoise](#whitenoise)
 * [vibrating-rectangles](#vibrating-rectangles)
 * [sdl2ttf](#sdl2ttf)
+* [abelian-sandpile](#abelian-sandpile)
 
 
 ---
@@ -30,7 +31,7 @@ quite so programmed.
 ---
 ## <a name="raster-bars"></a>raster-bars.p6
 
-Written for Rosettacode http://rosettacode.org/wiki/Raster_bars#Perl_6
+Written for Rosettacode http://rosettacode.org/wiki/Raster_bars#Raku
 
 Displays a series of randomly colored bars and scrolls them with an array of options.
 
@@ -39,13 +40,15 @@ Will adjust size to fill / fit window size.
 Displays a simple frames-per-second calculation, updated every second.
 
 - Use Up / Down arrows to change the scroll speed.
-- Use Left / Right arroes to adjust the gap between the raster bars.
+- Use Left / Right arrows to adjust the gap between the raster bars.
 - Use Pg Up / Pg Dn to adjust raster bar height.
 - Use Z / X to change the angle of the raster bars.
 - Use Space bar to pause / resume scrolling.
 - Use Left Ctrl to toggle the scroll direction.
 - Press R to toggle Randomize on / off.
 - If Randomize is active, adjust the randomize delay with < / >
+- Press S to toggle Swaying on / off.
+- If Swaying is active, adjust the period with D / F
 - Press Q to exit.
 
 May pass in options at the command line to select desired parameters. Setting
@@ -53,19 +56,21 @@ randomize to something less than 1 second may induce dizziness.
 
 ```
 Usage:
-  raster-bars.p6 [-b|--bar-height=<Int>] [-d|--dir=<Int>] [-s|--step=<Int>] [-g|--gap=<Int>] [-a|--angle=<Int>] [-r|--rnd=<Real>]
+  raster-bars.p6 [-b|--bar-height=<Int>] [-d|--dir=<Int>] [-s|--step=<Int>] [-g|--gap=<Int>] [-a|--angle=<Real>] [--sw|--sway=<Int>] [-r|--rnd=<Real>]
 
     -b|--bar-height=<Int>    Height of the individual "Raster bars", minimum 32 (pixels)
     -d|--dir=<Int>           Scroll direction: -1 is "up" 1 is "down"
     -s|--step=<Int>          Scroll speed (pixels per step
     -g|--gap=<Int>           Gap between bars (pixels)
-    -a|--angle=<Int>         Angle to orient bars off horizontal (-60 to 60 degrees)
+    -a|--angle=<Real>        Angle to orient bars off horizontal (-45 to 45 degrees)
+    --sw|--sway=<Int>        Swaying on / off
     -r|--rnd=<Real>          Delay between randomize events
+
 ```
 ---
 ## <a name="pendulum"></a>pendulum.p6
 
-Written for Rosettacode http://rosettacode.org/wiki/Animate_a_pendulum#Perl_6
+Written for Rosettacode http://rosettacode.org/wiki/Animate_a_pendulum#Raku
 
 A simple animation of a pendulum in a gravitational field. Changing the window
 size will change the period of the pendulum. (The length is tied to the window
@@ -74,7 +79,7 @@ height.)
 ---
 ## <a name="polyspiral"></a>polyspiral.p6
 
-A useless but fun and kinda pretty implementation of a polyspiral in Perl 6
+A useless but fun and kinda pretty implementation of a polyspiral in Raku
 using SDL2 bindings. Generates a fully animated polyspiral. Slightly hard to
 explain what a polyspiral is, easier to run it and see.
 
@@ -118,7 +123,7 @@ take longer (though still pretty groovy, baby!)
 ---
 ## <a name="whitenoise"></a>whitenoise.p6
 
-Uploaded to Rosettacode http://rosettacode.org/wiki/Image_noise#Perl_6
+Uploaded to Rosettacode http://rosettacode.org/wiki/Image_noise#Raku
 
 Plain old static. A modification / update of the whitenoise.p6 demo included
 with the SDL2::Raw module. Rosettacode requires the 320 x 240 dimensions but
@@ -152,6 +157,16 @@ Displays a simple frames-per-second calculation, updated every second.
 
 - Press space bar change animation.
 - Press Q to quit.
+
+---
+## <a name="abelian-sandpile"></a>abelian-sandpile.p6
+
+Alternate example for Rosettacode http://rosettacode.org/wiki/Abelian_sandpile_model#SDL_Animation
+
+Implements a fully animated Abelian sandpile model in SDL2. Pass in a stack size
+to adjust how many particle to process - defaults to 10_000. More than about
+48_000 will start to overflow the edges, which isn't a problem, but you won't be
+able to see the patterns anyway.
 
 ---
 
