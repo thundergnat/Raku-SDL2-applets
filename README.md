@@ -1,4 +1,4 @@
-# p6-SDL2-applets
+# Raku-SDL2-applets
 Various little Raku SDL2 applets, mostly for Rosettacode entries.
 
 * [forest-fire](#forest-fire)
@@ -9,10 +9,11 @@ Various little Raku SDL2 applets, mostly for Rosettacode entries.
 * [vibrating-rectangles](#vibrating-rectangles)
 * [sdl2ttf](#sdl2ttf)
 * [abelian-sandpile](#abelian-sandpile)
+* [particle-fountain](#particle-fountain)
 
 
 ---
-## <a name="forest-fire"></a>forest-fire.p6
+## <a name="forest-fire"></a>forest-fire.raku
 
 An SDL2 implementation of a "Forest fire" simulation. Parameters are set to give
 about 10-15 frames per second (on my system), which seems to me to be the best
@@ -29,7 +30,7 @@ chosen so that things happen quickly but fires grow organically, and don't look
 quite so programmed.
 
 ---
-## <a name="raster-bars"></a>raster-bars.p6
+## <a name="raster-bars"></a>raster-bars.raku
 
 Written for Rosettacode http://rosettacode.org/wiki/Raster_bars#Raku
 
@@ -56,7 +57,7 @@ randomize to something less than 1 second may induce dizziness.
 
 ```
 Usage:
-  raster-bars.p6 [-b|--bar-height=<Int>] [-d|--dir=<Int>] [-s|--step=<Int>] [-g|--gap=<Int>] [-a|--angle=<Real>] [--sw|--sway=<Int>] [-r|--rnd=<Real>]
+  raster-bars.raku [-b|--bar-height=<Int>] [-d|--dir=<Int>] [-s|--step=<Int>] [-g|--gap=<Int>] [-a|--angle=<Real>] [--sw|--sway=<Int>] [-r|--rnd=<Real>]
 
     -b|--bar-height=<Int>    Height of the individual "Raster bars", minimum 32 (pixels)
     -d|--dir=<Int>           Scroll direction: -1 is "up" 1 is "down"
@@ -68,7 +69,7 @@ Usage:
 
 ```
 ---
-## <a name="pendulum"></a>pendulum.p6
+## <a name="pendulum"></a>pendulum.raku
 
 Written for Rosettacode http://rosettacode.org/wiki/Animate_a_pendulum#Raku
 
@@ -77,7 +78,7 @@ size will change the period of the pendulum. (The length is tied to the window
 height.)
 
 ---
-## <a name="polyspiral"></a>polyspiral.p6
+## <a name="polyspiral"></a>polyspiral.raku
 
 A useless but fun and kinda pretty implementation of a polyspiral in Raku
 using SDL2 bindings. Generates a fully animated polyspiral. Slightly hard to
@@ -121,7 +122,7 @@ psychedelic effect, more lines will cause the rotation through a full cycle to
 take longer (though still pretty groovy, baby!)
 
 ---
-## <a name="whitenoise"></a>whitenoise.p6
+## <a name="whitenoise"></a>whitenoise.raku
 
 Uploaded to Rosettacode http://rosettacode.org/wiki/Image_noise#Raku
 
@@ -130,7 +131,7 @@ with the SDL2::Raw module. Rosettacode requires the 320 x 240 dimensions but
 will  run quite nicely at higher resolutions.
 
 ---
-## <a name="vibrating-rectangles"></a>vibrating-rectangles.p6
+## <a name="vibrating-rectangles"></a>vibrating-rectangles.raku
 
 Written for Rosettacode http://rosettacode.org/wiki/Vibrating_rectangles#SDL_Animation
 
@@ -145,7 +146,7 @@ Displays a simple frames-per-second calculation, updated every second.
 - Press Q to quit.
 
 ---
-## <a name="sdl2ttf"></a>sdl2ttf.p6
+## <a name="sdl2ttf"></a>sdl2ttf.raku
 
 Example script for SDL2-ttf module https://github.com/thundergnat/SDL2-ttf
 
@@ -159,7 +160,7 @@ Displays a simple frames-per-second calculation, updated every second.
 - Press Q to quit.
 
 ---
-## <a name="abelian-sandpile"></a>abelian-sandpile.p6
+## <a name="abelian-sandpile"></a>abelian-sandpile.raku
 
 Alternate example for Rosettacode http://rosettacode.org/wiki/Abelian_sandpile_model#SDL_Animation
 
@@ -167,6 +168,35 @@ Implements a fully animated Abelian sandpile model in SDL2. Pass in a stack size
 to adjust how many particle to process - defaults to 10_000. More than about
 48_000 will start to overflow the edges, which isn't a problem, but you won't be
 able to see the patterns anyway.
+
+---
+
+## <a name="particle-fountain"></a>particle-fountain.raku
+
+Modification/update of the "particles" example script included with SDL2::Raw.
+
+See: https://modules.raku.org/dist/SDL2::Raw:cpan:TIMOTIMO/examples/particles.p6
+for original demo script.
+
+Probably 90% or better of this code is directly copied from there. My
+modifications amount to probably 10% or less. Mostly bringing it up to current
+Raku capability, addition of color, reciprocation, resizability and some runtime
+control over a few parameters.
+
+Rotates through the palette to color the particles.  Use the UP and DOWN arrow
+keys to modify the saturation of the particle colors. All the way down and the
+particles will be white, the further you raise it the  more intense the colors
+will be.
+
+Use PAGE UP and PAGE DOWN keys to modify the "spread" of the particles as
+they are generated.
+
+Toggle reciprocation off / on with the SPACE bar.
+
+If reciprocation is active, Use LEFT and RIGHT arrow keys to modify angle range
+the fountain moves through.
+
+Pres the "q" key to quit.
 
 ---
 

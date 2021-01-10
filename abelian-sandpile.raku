@@ -88,8 +88,8 @@ sub fps {
     state $fps        = '';
     $fps-frames++;
     if now - $fps-now >= 1 {
-        $fps = [~] "\b" x 40, ' ' x 20, "\b" x 20 ,
-            sprintf "FPS: %5.2f  ", ($fps-frames / (now - $fps-now)).round(.01);
+        $fps = [~] "\r", ' ' x 20, "\r",
+            sprintf "FPS: %5.1f  ", ($fps-frames / (now - $fps-now));
         $fps-frames = 0;
         $fps-now = now;
     }

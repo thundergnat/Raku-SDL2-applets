@@ -1,7 +1,7 @@
 use NativeCall;
 use SDL2::Raw;
 
-my ($width, $height) = 900, 900;
+my ($width, $height) = 800, 800;
 
 SDL_Init(VIDEO);
 my SDL_Window $window = SDL_CreateWindow(
@@ -14,11 +14,11 @@ my SDL_Renderer $renderer = SDL_CreateRenderer( $window, -1, ACCELERATED +| PRES
 
 SDL_ClearError();
 
-my int ($w, $h) = 200, 200;
+my int ($w, $h) = 160, 160; # need to be divisible by 4
 
 my $forest_texture = SDL_CreateTexture($renderer, %PIXELFORMAT<RGB332>, STREAMING, $w, $h);
 
-my $pixdatabuf  = CArray[int64].new(0, 200, 200, 200);
+my $pixdatabuf  = CArray[int64].new(0, $w, $h, $w);
 my $work-buffer = CArray[int64].new;
 
 my int $bare    = 0;    # Black
@@ -119,8 +119,8 @@ sub fps {
     state $fps        = '';
     $fps-frames++;
     if now - $fps-now >= 1 {
-        $fps = [~] "\b" x 40, ' ' x 20, "\b" x 20 ,
-            sprintf "FPS: %5.2f  ", ($fps-frames / (now - $fps-now)).round(.01);
+        $fps = [~] "\r", ' ' x 20, "\r",
+            sprintf "FPS: %5.1f  ", ($fps-frames / (now - $fps-now));
         $fps-frames = 0;
         $fps-now = now;
     }
